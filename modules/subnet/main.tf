@@ -22,6 +22,14 @@ resource "aws_subnet" "private_subnets" {
   }
 }
 
+output "public_subnets" {
+  value = aws_subnet.public_subnets
+}
+
+output "private_subnets" {
+  value = aws_subnet.private_subnets
+}
+
 # Associate subnet with Route Table
 resource "aws_route_table_association" "a" {
   count          = length(var.public_subnet_prefix)
