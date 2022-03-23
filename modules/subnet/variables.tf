@@ -28,3 +28,6 @@ variable "availability_zones" {
 variable "route_table_id" {
   type = string
 }
+
+variable "igw" {
+}

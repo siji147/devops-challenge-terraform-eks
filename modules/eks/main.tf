@@ -52,3 +52,7 @@ resource "aws_iam_role_policy_attachment" "plan-a-AmazonEKSVPCResourceController
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
   role       = aws_iam_role.cluster_role.name
 }
+
+output "cluster_name" {
+    value = aws_eks_cluster.dev_eks_cluster.name
+}

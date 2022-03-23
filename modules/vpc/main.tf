@@ -42,3 +42,9 @@ output "route_table_id" {
   description = "The Route Table ID"
   value       = aws_route_table.prod-route-table.id
 }
+
+output "igw" {
+  value = aws_internet_gateway.gw
+}
+
+
