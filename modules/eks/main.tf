@@ -54,5 +54,5 @@ resource "aws_iam_role_policy_attachment" "plan-a-AmazonEKSVPCResourceController
 }
 
 output "cluster_name" {
-    value = aws_eks_cluster.dev_eks_cluster.name
+  value = aws_eks_cluster.dev_eks_cluster.name
 }

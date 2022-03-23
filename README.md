@@ -10,50 +10,72 @@ This challenge is about creating AWS EKS cluster in a VPC with Terraform.
 
 ---
 
+This project consists of custom modules written specifically for this challenge. The modules can be found at the `./modules` folder.
 
-
-## Running the Container
+## Project Prerequisite
 
 ---
 
-**To run the container using Docker**, make sure [Docker](https://docs.docker.com/get-docker/) is installed on the computer and run the following command:
+Make sure you have Terraform CLI installed on your computer to be able to run the project.
+You can follow the instructions [here](https://learn.hashicorp.com/tutorials/terraform/install-cli) to install Terraform CLI.
+
+Verify that Terraform has been installed successfully on your computer by running the command:
 
 ```bash
-docker run -p 3000:3000 siji147/plan-a-challenge-1:1
+terraform --version
 ```
 
-The application has been configured to listen on port 3000. If you want to specify a custom port for the application to run, use the following command:
+If the command above returns the version of the Terraform CLI you installed, you are good to follow the rest of the instructions. If not, you can troubleshoot the issue further to resolve it.
 
-```bash
-docker run -p <custom-port>:3000 siji147/plan-a-challenge-1:1
+After Terraform has been installed, go to your AWS user account to get your security credentials for programmatic access ([see here](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys)).
+
+For the sake of this project, make sure your user has Administrator privilege so that you would not have issues with permissions. In a real project, the best practice would be to follow the principle of least privilege.
+
+Get the access key and secret key.
+
+## Deploying the Project
+
+---
+
+Update the `main.tf` file at the root folder of the repository with the user credentials you copied in the previous step i.e.
+
+```Bash
+provider "aws" {
+  region     = "us-west-2"
+  access_key = "*********"
+  secret_key = "************************"
+}
 ```
 
-where custom-port is your custom port number.
+You can also specify your preferred region for deployment by changing the region parameter to your desired region.
+> **Note:** It is not recommended to save your user credentials in the terraform file and this is just for demo purposes. There are best practices you can follow and one of them is to configure AWS CLI and have Terraform to get your credentials from AWS CLI so that would not have to include it in your Terraform file.
 
-You can access the application by going to the URL `http://<server-ip>:<port-number>` e.g. `http://localhost:3000`.
+The next step is to run the Terraform command below:
 
-**To run the container as part of a Kubernetes cluster**, verify that `kubectl` is installed and you have a Kubernetes cluster either locally using `minikube` or in the cloud.
-
-Please follow [this link](https://kubernetes.io/docs/tasks/tools/) to install kubectl and minikube if you don't have them installed already.
-
-After installing `kubectl` and `minikube`, you can start `minikube` by running the command:
-
-```bash
-minikube start
+```Bash
+terraform init
 ```
 
-Then apply the Kubernetes configuration/manifest file at the root of the repository using the command:
+This command will initialize Terraform for the project and install all the necessary providers (e.g. AWS) specified in the project.
 
-```bash
-kubectl apply -f k8s-manifest.yaml
+Then, run the command:
+
+```Bash
+terraform plan
 ```
 
-After applying the manifest, a deployment and service components (named `plan-a-deployment` and `plan-a-service` respectively) will be created in the namespace `plan-a-namespace`.
+The `terraform plan` command creates an execution plan, which lets you preview the changes that Terraform plans to make to your infrastructure.
 
-You can access the application by running the command:
+Lastly, run:
 
-```bash
-minikube service plan-a-service -n plan-a-namespace
+```Bash
+terraform apply
 ```
 
-The application will automatically be opened in your default browser on port 32000 which is the configured nodePort in the Kubernetes manifest.
+This command applies your changes and deploys your resources to AWS. It will prompt you for a confirmation in which you will need to type "yes" to continue.
+
+If you are running the command from a CI/CD pipeline, or if you do not wish to manually confirm the changes, you can append `--auto-approve` flag to automatically approve the changes.
+
+```Bash
+terraform apply --auto-approve
+```
