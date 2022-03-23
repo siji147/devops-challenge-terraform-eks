@@ -50,7 +50,7 @@ provider "aws" {
 You can also specify your preferred region for deployment by changing the region parameter to your desired region.
 > **Note:** It is not recommended to save your user credentials in the terraform file and this is just for demo purposes. There are best practices you can follow and one of them is to configure AWS CLI and have Terraform to get your credentials from AWS CLI so that would not have to include it in your Terraform file.
 
-The next step is to run the Terraform command below:
+Run the subsequent commands from the root folder of the repository:
 
 ```Bash
 terraform init
