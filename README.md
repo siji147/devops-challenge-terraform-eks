@@ -1,10 +1,10 @@
-# PlanA DevOps Challenge 2
+# DevOps Challenge - Terraform and AWS EKS
 
 ## Introduction
 
 ---
 
-This challenge is about creating AWS EKS cluster in a VPC with Terraform.
+This challenge is about creating an AWS EKS cluster in a VPC with Terraform. The full details of the challenge can be found [here](./devops-challenge.md).
 
 ## Project Structure
 
